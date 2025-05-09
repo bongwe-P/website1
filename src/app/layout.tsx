@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark"> {/* Apply dark class for dark theme by default */}
+    <html lang="en" className="dark">{/* Apply dark class for dark theme by default */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
         <Navbar />
         <main className="flex-grow pt-16"> {/* Add padding-top to avoid overlap with sticky navbar */}
