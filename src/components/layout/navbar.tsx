@@ -11,9 +11,9 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Services', href: '/services' },
-  { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Insights', href: '/insights' }, // Link to the blog/insights page
-  { name: 'Contact', href: '/contact' },   // Link to the contact page
+  { name: 'Blogs', href: '/portfolio' }, // Changed "Portfolio" to "Blogs"
+  { name: 'Insights', href: '/insights' }, 
+  { name: 'Contact', href: '/contact' },
 ];
 
 export function Navbar() {
