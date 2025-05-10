@@ -3,26 +3,23 @@
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Bot, Zap, Target, PieChart, UserCog, Users, Code } from 'lucide-react';
-// Removed Metadata import
-
-// Removed metadata export
+import { Bot, Zap, Target, PieChart, UserCog, Users, Code, Brain, PhoneCall, MessageSquareHeart } from 'lucide-react';
 
 const services = [
   {
     id: 'ai-customer-engagement',
     name: 'AI-Powered Customer Engagement',
     description: '24/7 chatbots, virtual assistants for inquiries, support, appointments, and lead qualification.',
-    details: 'Enhance customer satisfaction and operational efficiency with intelligent AI agents that provide instant, accurate responses and streamline communication channels.',
+    details: 'Supercharge your customer interactions with AI. We deploy intelligent chatbots and virtual assistants that operate around the clock, providing instant responses to inquiries, offering comprehensive support, seamlessly scheduling appointments, and effectively qualifying leads. This not only enhances customer satisfaction by providing immediate assistance but also frees up your human team to focus on more complex and strategic tasks, boosting overall operational efficiency.',
     ctaLink: '/contact?service=ai-customer-engagement',
     ctaText: 'Automate Customer Service',
-    Icon: Bot,
+    Icon: MessageSquareHeart, // Changed Icon
   },
   {
     id: 'workflow-automation',
     name: 'Workflow & Process Automation',
     description: 'Automating data entry, invoicing, email responses, report generation, and other repetitive tasks.',
-    details: 'Free up your team\'s valuable time by automating routine business processes, reducing errors and improving overall productivity and focus on core activities.',
+    details: 'Reclaim countless hours and minimize human error by automating your core business processes. Our AI solutions can handle tedious tasks like data entry, invoice processing, generating standard email responses, compiling reports, and much more. This streamlining of operations not only boosts productivity but also improves accuracy and allows your employees to concentrate on high-value activities that drive growth.',
     ctaLink: '/contact?service=workflow-automation',
     ctaText: 'Optimize Your Workflows',
     Icon: Zap,
@@ -30,8 +27,8 @@ const services = [
   {
     id: 'sales-marketing-automation',
     name: 'Sales & Marketing Automation',
-    description: 'Lead nurturing, campaign execution, lead scoring, personalized follow-ups, social media automation, and marketing copy generation.',
-    details: 'Boost your sales pipeline and marketing ROI with AI-driven tools that personalize outreach, manage campaigns, and generate engaging content.',
+    description: 'Lead nurturing, campaign execution, lead scoring, personalized follow-ups, social media automation, AI voice assistants for call scheduling and outreach, and marketing copy generation.',
+    details: 'Revolutionize your sales and marketing efforts with intelligent automation. We implement AI-driven systems for sophisticated lead nurturing sequences, automated campaign execution across multiple channels, intelligent lead scoring to prioritize high-potential prospects, and personalized automated follow-ups. Our services now include AI voice assistants capable of scheduling calls and even making initial outreach calls, significantly boosting your sales team’s efficiency. We also leverage AI to generate compelling marketing copy and automate social media management, ensuring a consistent and engaging brand presence.',
     ctaLink: '/contact?service=sales-marketing-automation',
     ctaText: 'Boost Your Sales Engine',
     Icon: Target,
@@ -40,7 +37,7 @@ const services = [
     id: 'data-analysis-decision-support',
     name: 'Data Analysis & Decision Support',
     description: 'Processing business data, generating insights/reports, and creating real-time dashboards/alerts.',
-    details: 'Unlock the power of your data. We provide AI-driven analytics to help you make informed decisions, identify trends, and discover new opportunities.',
+    details: 'Transform your raw data into actionable intelligence. Our AI-powered analytics platforms process vast amounts of business data to uncover hidden patterns, generate comprehensive reports, and create intuitive real-time dashboards with custom alerts. This enables you to make data-driven decisions with confidence, identify emerging market trends, optimize your strategies, and discover new growth opportunities that might otherwise go unnoticed.',
     ctaLink: '/contact?service=data-analysis',
     ctaText: 'Unlock Data Insights',
     Icon: PieChart,
@@ -48,29 +45,38 @@ const services = [
   {
     id: 'custom-ai-agent-development',
     name: 'Custom AI Agent Development',
-    description: 'Bespoke multi-agent systems, virtual project managers, and specialized agents trained on your specific client context and business needs.',
-    details: 'Get tailor-made AI solutions designed from the ground up to meet your unique challenges and integrate seamlessly with your existing operations.',
+    description: 'Bespoke multi-agent systems, virtual project managers, specialized agents trained on your client context, and AI voice assistants for specific tasks.',
+    details: 'Get AI solutions built specifically for your unique business needs. We specialize in developing custom AI agents, including sophisticated multi-agent systems for complex workflow automation, virtual project managers to oversee tasks and timelines, and specialized agents trained on your proprietary data and client context. This includes crafting AI voice assistants designed for specific operational functions, ensuring seamless integration and maximum impact on your unique challenges.',
     ctaLink: '/contact?service=custom-ai-dev',
     ctaText: 'Get Custom AI Solutions',
     Icon: UserCog,
   },
   {
     id: 'consulting-training',
-    name: 'AI Consulting & Training',
-    description: 'Strategic AI adoption consulting, project planning, implementation guidance, and team training sessions.',
-    details: 'Navigate the complexities of AI adoption with expert guidance. We help you strategize, plan, and upskill your team for successful AI integration.',
+    name: 'AI Strategy, Consulting & Training',
+    description: 'Strategic AI adoption roadmaps, project planning, implementation guidance, change management, and comprehensive team training sessions.',
+    details: 'Successfully navigate the complexities of AI adoption with our expert guidance. We provide strategic consulting to develop clear AI adoption roadmaps, detailed project planning, hands-on implementation support, and effective change management strategies. Furthermore, we empower your team with comprehensive training sessions tailored to different skill levels, ensuring they are proficient and confident in using new AI tools and systems.',
     ctaLink: '/contact?service=consulting',
     ctaText: 'Empower Your Team',
-    Icon: Users,
+    Icon: Brain, // Changed Icon
   },
   {
-    id: 'website-creation',
-    name: 'Modern Website Creation',
-    description: 'Building responsive, conversion-focused websites, like the one you\'re on, or even more advanced platforms.',
-    details: 'Establish a strong online presence with a professionally designed website. We create sites that are not only visually appealing but also optimized for performance, user experience, and achieving your business objectives. We can build sites with integrated AI features too!',
+    id: 'website-creation-modernization',
+    name: 'Modern Website Creation & Modernization',
+    description: 'Building responsive, conversion-focused websites, like the one you\'re on, or even more advanced platforms with integrated AI features.',
+    details: 'Establish or upgrade your digital storefront with a cutting-edge website. We design and develop responsive, visually stunning, and conversion-focused websites that deliver exceptional user experiences. Whether you need a brand new site, a redesign of an existing one, or the integration of advanced AI features (like chatbots or personalized content delivery), we build platforms that not only look great but are also optimized for performance, SEO, and achieving your specific business goals.',
     ctaLink: '/contact?service=website-creation',
-    ctaText: 'Build Your Website',
+    ctaText: 'Build/Upgrade Your Website',
     Icon: Code,
+  },
+    {
+    id: 'ai-voice-solutions',
+    name: 'AI Voice Assistant Solutions',
+    description: 'Intelligent voice assistants for call scheduling, automated phone calls, customer service, and internal task automation.',
+    details: 'Leverage the power of voice with our custom AI voice assistant solutions. We design and deploy intelligent voice agents that can manage call scheduling, make automated yet personalized phone calls for sales or surveys, provide voice-based customer service, and even automate internal tasks through voice commands. This technology can significantly improve efficiency and create novel interaction channels with your clients and for your team.',
+    ctaLink: '/contact?service=ai-voice-solutions',
+    ctaText: 'Implement Voice AI',
+    Icon: PhoneCall, // New Icon
   },
 ];
 

@@ -7,12 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
 import { Mail, Lightbulb } from 'lucide-react';
-import { BlogPost, getAllBlogPosts } from '@/lib/blog-data'; // Keep this for blog data
+import { BlogPost, getAllBlogPosts } from '@/lib/blog-data';
 
-// PostCard can be defined here as it was before
 const PostCard = ({ post, index }: { post: BlogPost, index: number }) => (
   <RevealOnScroll delay={index * 100}>
-    <Link href={`/insights/${post.slug}`} className="block bg-card rounded-lg shadow-lg overflow-hidden group h-full flex flex-col">
+    {/* Updated Link to point to /blogs/[slug] */}
+    <Link href={`/blogs/${post.slug}`} className="block bg-card rounded-lg shadow-lg overflow-hidden group h-full flex flex-col">
       <img src={post.imageUrl} alt={post.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
       <div className="p-6 flex flex-col flex-grow">
         <p className="text-sm text-primary mb-1 group-hover:underline">{post.category}</p>
@@ -31,8 +31,9 @@ const PostCard = ({ post, index }: { post: BlogPost, index: number }) => (
   </RevealOnScroll>
 );
 
-export default function InsightsPage() {
-  const allPostsData = getAllBlogPosts(); // Fetch data directly in the component
+// Renamed function to BlogsPage
+export default function BlogsPage() {
+  const allPostsData = getAllBlogPosts();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -70,9 +71,10 @@ export default function InsightsPage() {
     <div className="pt-16 md:pt-20">
       <header className="py-10 md:py-16 bg-gradient-to-br from-background to-card text-center">
         <RevealOnScroll>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">AI Insights & Trends</h1>
+          {/* Updated Title */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Blog & Insights</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Stay informed with the latest in AI, automation best practices, and tips for small businesses.
+            Stay informed with the latest in AI, automation best practices, success stories, and tips for small businesses.
           </p>
         </RevealOnScroll>
       </header>
@@ -120,13 +122,14 @@ export default function InsightsPage() {
       </section>
 
       <RevealOnScroll>
-        <section id="insights-cta" className="py-12 md:py-20 bg-secondary">
+        {/* Updated section ID to blog-cta */}
+        <section id="blog-cta" className="py-12 md:py-20 bg-secondary">
           <div className="container mx-auto px-4 text-center">
             <div className="max-w-2xl mx-auto">
               <Mail className="w-12 h-12 text-primary mx-auto mb-4" />
               <h2 className="text-3xl font-bold text-foreground mb-4">Stay Updated & Share Your Ideas</h2>
               <p className="text-muted-foreground mb-8">
-                Subscribe to our newsletter for the latest AI insights, or let us know if there's a specific topic you'd like us to cover.
+                Subscribe to our newsletter for the latest insights from our blog, or let us know if there's a specific topic you'd like us to cover.
               </p>
               
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-10">
@@ -146,7 +149,8 @@ export default function InsightsPage() {
               <div className="flex items-center justify-center">
                 <Lightbulb className="w-6 h-6 text-primary mr-3" />
                 <p className="text-muted-foreground">
-                  Have a topic suggestion? <Link href="/contact?subject=Topic+Suggestion&message=I%20have%20a%20topic%20suggestion%20for%20the%20Fortune%20AI%20blog:" className="text-primary hover:underline font-semibold">Let us know!</Link>
+                  {/* Updated link to point to contact page with blog context */}
+                  Have a topic suggestion? <Link href="/contact?subject=Blog+Topic+Suggestion&message=I%20have%20a%20topic%20suggestion%20for%20the%20Fortune%20AI%20blog:" className="text-primary hover:underline font-semibold">Let us know!</Link>
                 </p>
               </div>
             </div>
