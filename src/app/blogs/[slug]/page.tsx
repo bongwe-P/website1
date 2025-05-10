@@ -1,7 +1,8 @@
+
 // src/app/blogs/[slug]/page.tsx
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react'; // Added useEffect, useState
 import { useParams } from 'next/navigation';
 import { getBlogPostBySlug, BlogPost } from '@/lib/blog-data'; // Ensure BlogPost is imported if not already
 import { RevealOnScroll } from '@/components/RevealOnScroll';
@@ -16,21 +17,18 @@ import {
   Target as TargetIcon,
   BarChart2,
   Award,
-  BrainCircuit // Assuming this is for success stories
+  BrainCircuit
 } from 'lucide-react';
 
-// Define a type for Success Story specific fields if they exist on the BlogPost object
-// This is illustrative. You'd fetch the actual structure for success stories.
 interface SuccessStoryDetails {
   clientName?: string;
-  projectTitle?: string; // This might be the same as post.title
-  projectOverview?: string; // This might be the same as post.excerpt
+  projectTitle?: string;
+  projectOverview?: string;
   clientChallenge?: string[];
-  ourSolution?: Array<{ title: string; description: string; iconName: string }>; // iconName to map to Lucide icons
+  ourSolution?: Array<{ title: string; description: string; iconName: string }>;
   measurableResults?: Array<{ metric: string; description: string; iconName: string }>;
   technologiesUsed?: string[];
   clientTestimonial?: { quote: string; author: string };
-  // Add other fields specific to success stories from your blog-data.ts for post-8
 }
 
 const IconMap: { [key: string]: React.ElementType } = {
@@ -43,14 +41,31 @@ const IconMap: { [key: string]: React.ElementType } = {
 
 const BlogPostPage: React.FC = () => {
   const paramsFromHook = useParams<{ slug: string }>();
-  const slug = paramsFromHook.slug;
-  const post = getBlogPostBySlug(slug) as BlogPost & SuccessStoryDetails; // Cast to include potential success story fields
+  const [currentSlug, setCurrentSlug] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (paramsFromHook && typeof paramsFromHook.slug === 'string') {
+      setCurrentSlug(paramsFromHook.slug);
+    }
+  }, [paramsFromHook]);
+
+  if (currentSlug === undefined) {
+    // Render loading state or null until slug is resolved on client
+    return (
+      <div className="pt-16 md:pt-20 text-center py-10">
+        <h1 className="text-2xl font-bold">Loading Post...</h1>
+        {/* You can add a spinner or a more sophisticated loading skeleton here */}
+      </div>
+    );
+  }
+
+  const post = getBlogPostBySlug(currentSlug) as BlogPost & SuccessStoryDetails;
 
   if (!post) {
     return (
       <div className="pt-16 md:pt-20 text-center py-10">
         <h1 className="text-2xl font-bold">Post Not Found</h1>
-        <p className="mb-6">The blog post with slug "{slug}" could not be found.</p>
+        <p className="mb-6">The blog post with slug "{currentSlug}" could not be found.</p>
         <Button asChild>
           <Link href="/blogs">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Blogs
@@ -60,7 +75,6 @@ const BlogPostPage: React.FC = () => {
     );
   }
 
-  // Check if this post is a success story to render it differently
   const isSuccessStory = post.category === 'Success Stories';
 
   return (
@@ -99,8 +113,7 @@ const BlogPostPage: React.FC = () => {
       </RevealOnScroll>
 
       <RevealOnScroll delay={200}>
-        <article className={`py-8 md:py-12 prose dark:prose-invert lg:prose-xl max-w-3xl mx-auto px-4 ${isSuccessStory ? 'max-w-4xl' : 'max-w-3xl' }`}>
-          {/* Conditional Rendering for Success Stories */}
+        <article className={`py-8 md:py-12 prose dark:prose-invert lg:prose-xl mx-auto px-4 ${isSuccessStory ? 'max-w-4xl' : 'max-w-3xl' }`}>
           {isSuccessStory ? (
             <>
               {post.imageUrl && (
@@ -196,9 +209,8 @@ const BlogPostPage: React.FC = () => {
             // Default rendering for standard blog posts
             <>
               <p>{post.excerpt}</p>
-              {/* Placeholder for full content for regular blog posts */}
               {post.content ? (
-                <div dangerouslySetInnerHTML={{ __html: post.content }} /> // Assuming content is HTML
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
               ) : (
                 <p className="mt-8 text-center text-muted-foreground">
                   <em>Full blog post content will appear here when available.</em>
