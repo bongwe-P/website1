@@ -4,6 +4,10 @@ import './globals.css';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { ScrollProgressBar } from '@/components/ui/ScrollProgressBar';
+import { PageTransitionWrapper } from '@/components/layout/PageTransitionWrapper';
+import { CustomCursor } from '@/components/ui/CustomCursor';
+import { Preloader } from '@/components/ui/Preloader'; // Added import
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,9 +35,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
         suppressHydrationWarning={true} 
       >
+        <Preloader /> {/* Added Preloader */}
+        <CustomCursor />
+        <ScrollProgressBar />
         <Navbar />
-        <main className="flex-grow pt-16"> {/* Add padding-top to avoid overlap with sticky navbar */}
-          {children}
+        <main className="flex-grow pt-16 flex flex-col">
+          <PageTransitionWrapper>
+            {children}
+          </PageTransitionWrapper>
         </main>
         <Footer />
         <Toaster />

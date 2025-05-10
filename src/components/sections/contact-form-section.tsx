@@ -45,7 +45,12 @@ export function ContactFormSection() {
   }
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-background">
+    <section id="contact" className="relative overflow-hidden py-16 md:py-24 bg-background"> {/* Modified classes */}
+      {/* Animated gradient elements */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-[10%] top-[20%] h-[300px] w-[300px] animate-pulse rounded-full bg-accent/10 blur-3xl filter" />
+        <div className="absolute right-[10%] bottom-[5%] h-[300px] w-[300px] animate-pulse rounded-full bg-primary/10 blur-3xl filter delay-3000" />
+      </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
         <h2 className="text-4xl font-bold text-center mb-4 tracking-tight">Get in Touch</h2>
@@ -54,7 +59,7 @@ export function ContactFormSection() {
         </p>
         </RevealOnScroll>
         <RevealOnScroll delay={200}>
-        <Card className="max-w-2xl mx-auto shadow-lg rounded-lg">
+        <Card className="max-w-2xl mx-auto shadow-lg rounded-lg"> {/* Card will sit on top of the animated background */}
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl font-semibold">
               <Mail className="text-primary h-7 w-7" />

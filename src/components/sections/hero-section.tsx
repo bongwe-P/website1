@@ -1,49 +1,30 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
-import Link from 'next/link';
+import { TypewriterHeadline } from '@/components/ui/TypewriterHeadline';
 
 export function HeroSection() {
-  const handleCTAClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const targetElement = document.querySelector('#features');
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
   return (
-    <section id="hero" className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-secondary pt-16"> {/* pt-16 for navbar */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+    <section id="hero" className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-secondary pt-16">
+      <div className="noise-overlay"></div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="text-center md:text-left">
-            <RevealOnScroll>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight">
-                <span className="block">Unlock Your</span>
-                <span className="block text-primary">Business Potential</span>
-                <span className="block">with FortuneAI</span>
-              </h1>
-            </RevealOnScroll>
-            <RevealOnScroll delay={200}>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto md:mx-0">
-                Leverage the power of artificial intelligence to gain actionable insights,
-                drive growth, and make smarter decisions for your company's future.
-              </p>
-            </RevealOnScroll>
-            <RevealOnScroll delay={400}>
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-accent/50 transition-shadow" asChild>
-                <Link href="#features" onClick={handleCTAClick}>
-                  Discover Features
-                </Link>
-              </Button>
-            </RevealOnScroll>
+            <TypewriterHeadline 
+              text="Fortune AI" 
+              className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-primary to-accent bg-[length:300%_300%] animate-[gradientShift_8s_ease_infinite] text-transparent bg-clip-text [filter:drop-shadow(0_0_10px_#00CFFD)]"
+              spanClassName="block" // Removed text-primary as gradient is on main text
+            />
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto md:mx-0">
+              AI that works for you
+            </p>
           </div>
           <RevealOnScroll delay={300} className="flex justify-center md:justify-end">
             <div className="relative w-full max-w-md lg:max-w-lg aspect-[4/3] rounded-xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 group">
               <Image
-                src="https://picsum.photos/800/600?random=1"
-                alt="AI powered business insights"
+                src="https://picsum.photos/800/600?random=1" // Using a placeholder image as before
+                alt="AI that works for you"
                 layout="fill"
                 objectFit="cover"
                 className="rounded-xl"

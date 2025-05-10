@@ -41,7 +41,7 @@ const testimonials: Testimonial[] = [
 
 export function TestimonialsSection() {
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-secondary">
+    <section id="testimonials" className="py-16 md:py-24 bg-muted"> {/* Changed background */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
           <h2 className="text-4xl font-bold text-center mb-4 tracking-tight">Loved by Innovators</h2>

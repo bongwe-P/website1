@@ -8,8 +8,9 @@ export const ContactFormSchema = z.object({
 
 export type ContactFormValues = z.infer<typeof ContactFormSchema>;
 
-export const PersonalizedGreetingClientSchema = z.object({
-  companyGoals: z.string().min(10, { message: "Company goals must be at least 10 characters."}),
-});
+// Commenting out as the related flow and action have been removed
+// export const PersonalizedGreetingClientSchema = z.object({
+//   companyGoals: z.string().min(10, { message: "Company goals must be at least 10 characters."}),
+// });
 
-export type PersonalizedGreetingClientValues = z.infer<typeof PersonalizedGreetingClientSchema>;
+// export type PersonalizedGreetingClientValues = z.infer<typeof PersonalizedGreetingClientSchema>;

@@ -1,8 +1,8 @@
 'use server';
 
 import { z } from 'zod';
-import { ContactFormSchema, PersonalizedGreetingClientSchema } from './types';
-import { generatePersonalizedGreeting, type PersonalizedGreetingInput } from '@/ai/flows/personalized-greeting';
+import { ContactFormSchema } from './types';
+// import { generatePersonalizedGreeting, type PersonalizedGreetingInput } from '@/ai/flows/personalized-greeting'; // Removed import
 
 export async function handleContactForm(values: z.infer<typeof ContactFormSchema>) {
   const validatedFields = ContactFormSchema.safeParse(values);
@@ -18,23 +18,24 @@ export async function handleContactForm(values: z.infer<typeof ContactFormSchema
   return { success: true, message: "Your message has been sent successfully!" };
 }
 
-export async function getPersonalizedGreetingAction(values: z.infer<typeof PersonalizedGreetingClientSchema>) {
-  const validatedFields = PersonalizedGreetingClientSchema.safeParse(values);
+// Removed getPersonalizedGreetingAction function as it depended on the deleted flow
+// export async function getPersonalizedGreetingAction(values: z.infer<typeof PersonalizedGreetingClientSchema>) {
+//   const validatedFields = PersonalizedGreetingClientSchema.safeParse(values);
 
-  if (!validatedFields.success) {
-    return { success: false, greeting: null, message: "Invalid input for company goals." };
-  }
+//   if (!validatedFields.success) {
+//     return { success: false, greeting: null, message: "Invalid input for company goals." };
+//   }
   
-  try {
-    const input: PersonalizedGreetingInput = { companyGoals: validatedFields.data.companyGoals };
-    const result = await generatePersonalizedGreeting(input);
-    if (result && result.greeting) {
-      return { success: true, greeting: result.greeting, message: null };
-    } else {
-      return { success: false, greeting: null, message: "Failed to generate greeting. AI did not return expected output." };
-    }
-  } catch (error) {
-    console.error("Error generating personalized greeting:", error);
-    return { success: false, greeting: null, message: "An error occurred while generating the greeting." };
-  }
-}
+//   try {
+//     const input: PersonalizedGreetingInput = { companyGoals: validatedFields.data.companyGoals };
+//     const result = await generatePersonalizedGreeting(input);
+//     if (result && result.greeting) {
+//       return { success: true, greeting: result.greeting, message: null };
+//     } else {
+//       return { success: false, greeting: null, message: "Failed to generate greeting. AI did not return expected output." };
+//     }
+//   } catch (error) {
+//     console.error("Error generating personalized greeting:", error);
+//     return { success: false, greeting: null, message: "An error occurred while generating the greeting." };
+//   }
+// }

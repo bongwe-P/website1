@@ -2,8 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes noiseAnimation {
+  0% { transform: translate(0,0); }
+  10% { transform: translate(-5%,-5%); }
+  20% { transform: translate(-10%,5%); }
+  30% { transform: translate(5%,-10%); }
+  40% { transform: translate(-5%,15%); }
+  50% { transform: translate(-10%,5%); }
+  60% { transform: translate(15%,0); }
+  70% { transform: translate(0,10%); }
+  80% { transform: translate(-15%,0); }
+  90% { transform: translate(10%,5%); }
+  100% { transform: translate(5%,0); }
+}
+
+/* CTA Button Animations */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 5px hsl(var(--accent)), 0 0 10px hsl(var(--accent)), 0 0 15px hsl(var(--accent)); }
+  50% { box-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent)), 0 0 30px hsl(var(--accent)); }
+}
+
+@keyframes microBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Jiggle Animation */
+@keyframes jiggle {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+/* Icon Pulse Animation */
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.7; }
+}
+
+/* Preloader Spinner Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.noise-overlay {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.05; /* Adjust opacity for subtlety */
+  animation: noiseAnimation 20s infinite alternate linear;
+  pointer-events: none; /* Ensure it doesn't interfere with interactions */
+  z-index: 0; /* Behind content */
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #7F00FF, #1F1F2E, #00CFFD);
+  background-size: 300% 300%;
+  animation: gradientShift 15s ease infinite;
+  position: relative; /* Needed for noise overlay positioning */
+  overflow-x: hidden; /* Prevent horizontal scroll from noise */
+}
+
+/* Custom Cursor Active State */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important; /* Force hide native cursor */
+}
+
+
+@layer utilities {
+  .animate-glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  .hover\:animate-micro-bounce:hover {
+    animation: microBounce 0.3s ease-in-out forwards;
+  }
+  .hover\:animate-jiggle:hover {
+    animation: jiggle 0.25s ease-in-out infinite alternate; 
+  }
+  .animate-spin-slow {
+    animation: spin 2s linear infinite; /* Slower spin */
+  }
+  .animate-icon-pulse {
+    animation: iconPulse 3s ease-in-out infinite;
+  }
 }
 
 @layer base {
@@ -26,26 +120,25 @@ body {
     --muted: 240 20% 30%;
     --muted-foreground: 0 0% 60%; /* Lighter gray for muted text */
 
-    --accent: 192 100% 50%; /* Electric Blue */
-    --accent-foreground: 240 20% 10%; /* Dark for contrast on blue */
+    --accent: 192 100% 50%; 
+    --accent-hsl: 192 100% 50%;
+    --accent-foreground: 240 20% 10%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 20% 35%; /* Subtle border */
-    --input: 240 20% 35%; /* Input background/border */
-    --ring: 192 100% 50%; /* Accent color for rings */
+    --border: 240 20% 35%; 
+    --input: 240 20% 35%; 
+    --ring: 192 100% 50%; 
 
     --radius: 0.5rem;
 
-    /* Chart colors, update if charts are used, providing defaults for now */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    /* Sidebar variables (less relevant here but keeping for completeness) */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -56,7 +149,6 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  /* The .dark class is for explicit dark mode, but we set dark vars in :root for dark-by-default */
   .dark {
     --background: 240 20% 15%;
     --foreground: 0 0% 98%;
@@ -70,7 +162,8 @@ body {
     --secondary-foreground: 0 0% 98%;
     --muted: 240 20% 30%;
     --muted-foreground: 0 0% 60%;
-    --accent: 192 100% 50%;
+    --accent: 192 100% 50%; 
+    --accent-hsl: 192 100% 50%;
     --accent-foreground: 240 20% 10%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
@@ -78,14 +171,12 @@ body {
     --input: 240 20% 35%;
     --ring: 192 100% 50%;
 
-    /* Chart colors for dark mode */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    /* Sidebar variables for dark mode */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -105,6 +196,6 @@ body {
     @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
