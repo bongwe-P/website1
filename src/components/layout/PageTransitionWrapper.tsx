@@ -32,7 +32,10 @@ export function PageTransitionWrapper({ children }: PageTransitionWrapperProps) 
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence 
+      mode="wait" 
+      initial={false}
+    >
       <motion.div
         key={pathname} // Keying by pathname is crucial for AnimatePresence to detect page changes
         initial="initial"

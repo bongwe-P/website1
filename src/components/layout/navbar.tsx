@@ -1,23 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image'; // Import the Image component
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React, { useState, useEffect } from 'react';
 
-// Updated navItems to link to actual pages
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Services', href: '/services' },
-  { name: 'Blogs', href: '/blogs' }, // Corrected href for Blogs
-  // { name: 'Insights', href: '/insights' }, // Removed Insights
+  { name: 'ROI Calculator', href: '/roi-calculator' }, // Added ROI Calculator
+  { name: 'Blogs', href: '/blogs' },
   { name: 'Contact', href: '/contact' },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,9 +35,8 @@ export function Navbar() {
       isScrolled ? "bg-background/80 backdrop-blur-md shadow-lg" : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20"> {/* Reverted navbar height */}
+        <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center">
-            {/* Adjusted width, height, and added objectFit for desired appearance */}
             <Image src="/logo.png" alt="FortuneAI Logo" width={240} height={60} objectFit="cover" /> 
           </Link>
           <nav className="hidden md:flex space-x-1">
@@ -47,8 +48,31 @@ export function Navbar() {
               </Button>
             ))}
           </nav>
-          {/* Mobile menu button can be added here using Sheet for an off-canvas menu */}
-          {/* TODO: Implement mobile navigation menu (hamburger menu) */}
+          <div className="md:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle> 
+                <nav className="grid gap-4 py-6">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-lg font-medium text-foreground hover:text-accent transition-colors duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

@@ -8,17 +8,17 @@ export function Preloader() {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    // Simulate asset loading
+    // Start fading out immediately or after a very short delay
     const timer = setTimeout(() => {
       setIsFadingOut(true);
-    }, 1500); // Adjust delay as needed
+    }, 100); // Reduced delay to 100ms to allow initial render
 
     // After fade out animation, set isLoading to false to remove from DOM
     const fadeOutTimer = setTimeout(() => {
       if (isFadingOut) { // Check if it's still fading out (not unmounted early)
         setIsLoading(false);
       }
-    }, 1500 + 500); // Delay + fade-out duration
+    }, 100 + 500); // Reduced delay + fade-out duration
 
     return () => {
       clearTimeout(timer);

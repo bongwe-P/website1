@@ -28,9 +28,15 @@
   50% { box-shadow: 0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent)), 0 0 30px hsl(var(--accent)); }
 }
 
+/* New Keyframe for Primary Color Glow */
+@keyframes glowPulsePrimary {
+  0%, 100% { box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 15px hsl(var(--primary)); }
+  50% { box-shadow: 0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); }
+}
+
 @keyframes microBounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  50% { transform: translateY(-3px); } /* Corrected this line */
 }
 
 /* Jiggle Animation */
@@ -85,6 +91,10 @@ body.custom-cursor-active * {
 @layer utilities {
   .animate-glow-pulse {
     animation: glowPulse 2s ease-in-out infinite;
+  }
+  /* New Utility for Primary Color Glow */
+  .animate-glow-pulse-primary {
+    animation: glowPulsePrimary 2s ease-in-out infinite;
   }
   .hover\:animate-micro-bounce:hover {
     animation: microBounce 0.3s ease-in-out forwards;
@@ -198,4 +208,14 @@ body.custom-cursor-active * {
   body {
     @apply text-foreground;
   }
+}
+
+/* Hide number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }

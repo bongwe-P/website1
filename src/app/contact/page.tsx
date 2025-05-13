@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast"; // Corrected path
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form"; // Added Controller
 import * as z from "zod";
-import { Mail, Linkedin, Info } from 'lucide-react';
+import { Mail, Linkedin, Info, Phone, MessageSquare } from 'lucide-react'; // Added Phone and MessageSquare icons
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"; // Added ShadCN Select imports
+// Removed chatbot import
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -134,6 +135,8 @@ export default function ContactPage() {
         </RevealOnScroll>
       </header>
 
+      {/* Chatbot Section Removed */}
+
       <section id="contact-form-section" className="py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -195,8 +198,18 @@ export default function ContactPage() {
               <div className="space-y-6 text-muted-foreground">
                 <div>
                   <h3 className="text-lg font-medium text-foreground flex items-center"><Mail className="w-5 h-5 mr-2 text-primary"/> Email Us</h3>
-                  <a href="mailto:info@fortuneai.example.com" className="hover:text-primary transition-colors">info@fortuneai.example.com</a>
+                  <a href="mailto:fortuneaiagency@gmail.com" className="hover:text-primary transition-colors">fortuneaiagency@gmail.com</a>
                   <p className="text-sm">We typically respond within 24 business hours.</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-foreground flex items-center"><Phone className="w-5 h-5 mr-2 text-primary"/> Call Us</h3>
+                  <a href="tel:+27647668853" className="hover:text-primary transition-colors">+27 64 766 8853</a>
+                  <p className="text-sm">Available during business hours.</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-foreground flex items-center"><MessageSquare className="w-5 h-5 mr-2 text-primary"/> WhatsApp</h3>
+                  <a href="https://wa.me/27647668853" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">+27 64 766 8853</a>
+                  <p className="text-sm">Chat with us directly on WhatsApp.</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-foreground flex items-center"><Linkedin className="w-5 h-5 mr-2 text-primary"/> LinkedIn</h3>

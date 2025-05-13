@@ -2,40 +2,72 @@
 
 import { z } from 'zod';
 import { ContactFormSchema } from './types';
-// import { generatePersonalizedGreeting, type PersonalizedGreetingInput } from '@/ai/flows/personalized-greeting'; // Removed import
+import { Resend } from 'resend';
+
+// Initialize Resend with the API key from environment variables
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Email address to send contact form submissions to
+const emailTo = process.env.EMAIL_TO;
+// Email address to send from (must be a verified domain in Resend or onboarding@resend.dev for testing)
+const emailFromSetting = process.env.EMAIL_FROM || 'onboarding@resend.dev'; 
 
 export async function handleContactForm(values: z.infer<typeof ContactFormSchema>) {
   const validatedFields = ContactFormSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { success: false, message: "Invalid form data." };
+    console.error("Form validation failed:", validatedFields.error.flatten().fieldErrors);
+    return { success: false, message: "Invalid form data. Please check your entries.", errors: validatedFields.error.flatten().fieldErrors };
   }
 
-  // Simulate form submission (e.g., send email, save to DB)
-  console.log("Contact form submitted:", validatedFields.data);
-  await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set. Email sending is disabled.');
+    return { success: false, message: 'Server configuration error. Could not send email.' };
+  }
+  if (!emailTo) {
+    console.error('EMAIL_TO is not set. Cannot determine where to send the email.');
+    return { success: false, message: 'Server configuration error. Could not send email.' };
+  }
 
-  return { success: true, message: "Your message has been sent successfully!" };
+  const { name, email, company, service, message } = validatedFields.data;
+
+  // Construct email subject
+  const subject = `New Homepage Contact: ${service || 'General Inquiry'} from ${name}`;
+
+  // Construct HTML content for the email
+  const htmlContent = `
+    <h2>New Homepage Contact Form Submission</h2>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+    ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+    <p><strong>Service of Interest:</strong> ${service || 'N/A'}</p>
+    <p><strong>Message:</strong></p>
+    <p style="white-space: pre-wrap;">${message}</p>
+  `;
+
+  try {
+    const { data: sendData, error: sendError } = await resend.emails.send({
+      from: `Fortune AI Contact <${emailFromSetting}>`, 
+      to: [emailTo],
+      replyTo: email, 
+      subject: subject,
+      html: htmlContent,
+    });
+
+    if (sendError) {
+      console.error('Error sending email with Resend:', sendError);
+      return { success: false, message: sendError.message || 'Failed to send email.' };
+    }
+
+    console.log('Contact form data sent successfully via Resend from server action:', sendData);
+    return { success: true, message: "Your message has been sent successfully! We will be in touch." };
+
+  } catch (error) {
+    console.error('Error in handleContactForm while sending email:', error);
+    let errorMessage = 'An unknown server error occurred while sending the email.';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    return { success: false, message: errorMessage };
+  }
 }
-
-// Removed getPersonalizedGreetingAction function as it depended on the deleted flow
-// export async function getPersonalizedGreetingAction(values: z.infer<typeof PersonalizedGreetingClientSchema>) {
-//   const validatedFields = PersonalizedGreetingClientSchema.safeParse(values);
-
-//   if (!validatedFields.success) {
-//     return { success: false, greeting: null, message: "Invalid input for company goals." };
-//   }
-  
-//   try {
-//     const input: PersonalizedGreetingInput = { companyGoals: validatedFields.data.companyGoals };
-//     const result = await generatePersonalizedGreeting(input);
-//     if (result && result.greeting) {
-//       return { success: true, greeting: result.greeting, message: null };
-//     } else {
-//       return { success: false, greeting: null, message: "Failed to generate greeting. AI did not return expected output." };
-//     }
-//   } catch (error) {
-//     console.error("Error generating personalized greeting:", error);
-//     return { success: false, greeting: null, message: "An error occurred while generating the greeting." };
-//   }
-// }

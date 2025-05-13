@@ -3,7 +3,7 @@
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Bot, Zap, Target, PieChart, UserCog, Users, Code, Brain, PhoneCall, MessageSquareHeart } from 'lucide-react';
+import { Bot, Zap, Target, PieChart, UserCog, Users, Code, Brain, PhoneCall, MessageSquareHeart, Laptop } from 'lucide-react'; // Added Laptop
 
 const services = [
   {
@@ -69,7 +69,16 @@ const services = [
     ctaText: 'Build/Upgrade Your Website',
     Icon: Code,
   },
-    {
+  {
+    id: 'custom-app-web-development',
+    name: 'Custom App & Web App Development',
+    description: 'Building tailored web and mobile applications to solve specific business challenges and create unique user experiences.',
+    details: 'Beyond standard websites, we develop custom web applications and mobile apps designed to meet your unique operational needs or innovative product ideas. From complex internal tools to customer-facing platforms, our development process focuses on scalability, usability, and robust performance to deliver solutions that provide a distinct competitive advantage.',
+    ctaLink: '/contact?service=custom-app-web-development',
+    ctaText: 'Develop Your Custom App',
+    Icon: Laptop, // Changed to Laptop icon
+  },
+  {
     id: 'ai-voice-solutions',
     name: 'AI Voice Assistant Solutions',
     description: 'Intelligent voice assistants for call scheduling, automated phone calls, customer service, and internal task automation.',

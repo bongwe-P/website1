@@ -1,0 +1,32 @@
+[
+  {
+    "id": "services",
+    "question": "What services do you offer?",
+    "answer": "We offer a range of AI-powered solutions including sales and marketing automation, data analysis, and personalized customer experiences. Check our services page for more details!",
+    "keywords": ["services", "offer", "solutions", "products"]
+  },
+  {
+    "id": "support",
+    "question": "How can I contact support?",
+    "answer": "You can reach us via the contact form on this page, or email us at support@fortuneai.com. You are currently chatting with our FAQ bot!",
+    "keywords": ["contact", "support", "help", "reach out", "email"]
+  },
+  {
+    "id": "pricing",
+    "question": "What is your pricing?",
+    "answer": "Our pricing varies depending on the specific services and scale of your project. Please contact us for a custom quote.",
+    "keywords": ["pricing", "cost", "quote", "rates", "how much"]
+  },
+  {
+    "id": "location",
+    "question": "Where are you located?",
+    "answer": "Our main office is virtual, but we serve clients globally!",
+    "keywords": ["location", "where", "address", "office"]
+  },
+  {
+    "id": "default",
+    "question": "Default fallback",
+    "answer": "I'm still learning! Can you try asking something else, or rephrase your question? For complex queries, please use the contact form.",
+    "keywords": []
+  }
+]

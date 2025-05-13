@@ -8,6 +8,7 @@ import { ScrollProgressBar } from '@/components/ui/ScrollProgressBar';
 import { PageTransitionWrapper } from '@/components/layout/PageTransitionWrapper';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { Preloader } from '@/components/ui/Preloader'; // Added import
+// Removed TopProgressBar import
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
         <Preloader /> {/* Added Preloader */}
         <CustomCursor />
+        {/* Removed TopProgressBar */}
         <ScrollProgressBar />
         <Navbar />
         <main className="flex-grow pt-16 flex flex-col">

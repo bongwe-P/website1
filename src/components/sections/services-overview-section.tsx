@@ -43,12 +43,7 @@ const services: Service[] = [
     description: 'Bespoke multi-agent systems and specialized AI agents trained on your unique business context.',
     linkTo: '/services#custom-ai'
   },
-  {
-    icon: Users,
-    title: 'AI Consulting & Training',
-    description: 'Strategic AI adoption consulting, planning, implementation guidance, and team training.',
-    linkTo: '/services#consulting-training'
-  },
+  // Removed AI Consulting & Training
   {
     icon: Laptop, // Icon for Website Creation
     title: 'Modern Website Creation',
