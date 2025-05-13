@@ -199,7 +199,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-medium text-foreground flex items-center"><Mail className="w-5 h-5 mr-2 text-primary"/> Email Us</h3>
                   <a href="mailto:fortuneaiagency@gmail.com" className="hover:text-primary transition-colors">fortuneaiagency@gmail.com</a>
-                  <p className="text-sm">We typically respond within 24 business hours.</p>
+                  <p className="text-sm">We typically respond within minutes.</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-foreground flex items-center"><Phone className="w-5 h-5 mr-2 text-primary"/> Call Us</h3>
