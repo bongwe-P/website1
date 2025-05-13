@@ -1,23 +1,31 @@
-# Settings for Backend (on Cloud Run).
-# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+# Settings for Cloud Run
 runConfig:
-  minInstances: 0
-  # maxInstances: 10
-  # concurrency: 80
-  # cpu: 1
-  # memoryMiB: 512
+  # minInstances: 0  # Optional: keep default or set as needed
+  maxInstances: 10  #  <-- THIS IS THE CRITICAL CHANGE
+  # concurrency: 80 # Optional: keep default or set as needed
+  # cpu: 1 # Optional: set as needed, check constraints with memory
+  # memoryMiB: 512 # Optional: set as needed, check constraints with CPU
+# Required. Specifies the directory to use as the root of your application.
+# If you use a monorepo, this will be the directory of the app you want to deploy.
+appBundle: . 
+# Optional. Sets the Node.js version.
+# Other available versions are: 16, 20.
+# firebase.json
+# {
+#   "apphosting": {
+#     "source": ".",
+#     "nodeVersion": "20"
+#   }
+# }
+# nodeVersion: 20
 
-# Environment variables and secrets.
+
+# Environment variables and secrets (add these if you need them)
 # env:
-  # Configure environment variables.
-  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-  # - variable: MESSAGE
-  #   value: Hello world!
-  #   availability:
-  #     - BUILD
-  #     - RUNTIME
-
-  # Grant access to secrets in Cloud Secret Manager.
-  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-  # - variable: MY_SECRET
-  #   secret: mySecretRef
+#   - variable: STORAGE_BUCKET
+#     value: mybucket.firebasestorage.app
+#     availability:
+#       - BUILD
+#       - RUNTIME
+#   - variable: API_KEY
+#     secret: myApiKeySecret
