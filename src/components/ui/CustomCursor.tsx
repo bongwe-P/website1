@@ -94,7 +94,7 @@ export function CustomCursor() {
       {/* Trail Element */}
       <div
         className={cn(
-          'custom-cursor-trail fixed rounded-full pointer-events-none z-[9999]',
+          'custom-cursor-trail fixed rounded-full pointer-events-none z-[2147483647]', // Increased z-index
           'bg-accent/30',
           isPointer ? 'w-6 h-6 opacity-50' : 'w-3 h-3 opacity-70',
           isHoveringText ? 'scale-150 opacity-40' : ''
@@ -109,7 +109,7 @@ export function CustomCursor() {
       {/* Main Cursor Dot */}
       <div
         className={cn(
-          'custom-cursor-dot fixed rounded-full pointer-events-none z-[9999]',
+          'custom-cursor-dot fixed rounded-full pointer-events-none z-[2147483647]', // Increased z-index
           'bg-accent',
           isPointer ? 'w-2 h-2' : 'w-2 h-2',
         )}

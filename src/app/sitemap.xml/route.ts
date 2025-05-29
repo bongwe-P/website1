@@ -1,7 +1,7 @@
 
 import { getAllBlogPosts } from '@/lib/blog-data'; // Corrected import
 
-const URL = 'https://fortuneai.co.za';
+const URL = 'https://www.fortuneai.co.za'; // Reverted to www
 
 export async function GET() {
   const today = new Date().toISOString().split('T')[0];
@@ -13,6 +13,7 @@ export async function GET() {
     '/contact',
     '/portfolio',
     '/services',
+    '/roi-calculator', 
   ];
 
   const sitemapEntries = staticPages.map((path) => ({
@@ -20,12 +21,11 @@ export async function GET() {
     lastModified: today,
   }));
 
-  // Fetch blog posts using the function
   const blogPosts = getAllBlogPosts(); 
 
   const blogPostEntries = blogPosts.map((post) => ({
     url: `${URL}/blogs/${post.slug}`,
-    lastModified: post.date || today, // Use post date if available, otherwise today
+    lastModified: post.date || today, 
   }));
 
   const allEntries = [...sitemapEntries, ...blogPostEntries];

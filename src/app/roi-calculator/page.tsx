@@ -1,25 +1,20 @@
-'use client';
+import type { Metadata } from 'next';
+import RoiCalculatorClient from './roi-calculator-client'; // Import the new client component
 
-import { RevealOnScroll } from '@/components/RevealOnScroll';
-import { ROICalculatorForm } from '@/components/sections/ROICalculatorForm'; // We will create this component next
+export const metadata: Metadata = {
+  title: 'AI Workflow Automation ROI Calculator - FortuneAI',
+  description: 'Estimate your potential cost savings and ROI by implementing AI-powered workflow automation with FortuneAI. Input your current process details to see the benefits.',
+  openGraph: {
+    title: 'AI Workflow Automation ROI Calculator - FortuneAI',
+    description: 'Estimate potential savings from AI workflow automation. See how FortuneAI can help.',
+  },
+  twitter: {
+    title: 'AI Workflow Automation ROI Calculator - FortuneAI',
+    description: 'Estimate potential savings from AI workflow automation. See how FortuneAI can help.',
+  },
+};
 
+// This page.tsx is now a Server Component
 export default function ROICalculatorPage() {
-  return (
-    <div className="pt-16 md:pt-20">
-      <header className="py-10 md:py-16 bg-gradient-to-br from-background to-card text-center">
-        <RevealOnScroll>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Workflow Automation ROI Calculator</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Estimate the potential time and cost savings your business can achieve by automating repetitive tasks.
-          </p>
-        </RevealOnScroll>
-      </header>
-
-      <main className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <ROICalculatorForm />
-        </div>
-      </main>
-    </div>
-  );
+  return <RoiCalculatorClient />;
 }

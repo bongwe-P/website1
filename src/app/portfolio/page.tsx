@@ -1,13 +1,23 @@
-'use client';
-
+import type { Metadata } from 'next';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-// Removed Metadata import
 
-// Removed metadata export
+export const metadata: Metadata = {
+  title: 'Portfolio - Success Stories & Case Studies | FortuneAI',
+  description: 'Discover how FortuneAI has empowered businesses with AI-driven solutions. Explore our case studies and see the tangible results we deliver in automation, efficiency, and growth.',
+  openGraph: {
+    title: 'Portfolio - Success Stories & Case Studies | FortuneAI',
+    description: 'Explore FortuneAI\'s case studies and see the tangible results we deliver in automation, efficiency, and growth.',
+  },
+  twitter: {
+    title: 'Portfolio - Success Stories & Case Studies | FortuneAI',
+    description: 'Explore FortuneAI\'s case studies and see the tangible results we deliver in automation, efficiency, and growth.',
+  },
+};
 
-// Placeholder data for portfolio items
+// 'use client'; // Commented out
+
 const portfolioItems = [
   {
     id: 'case-study-1',

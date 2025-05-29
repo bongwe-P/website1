@@ -1,13 +1,22 @@
-'use client'; // Add 'use client' at the top for simplicity
-
+import type { Metadata } from 'next';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Users, Target, Lightbulb, Handshake, ShieldCheck, BrainCircuit } from 'lucide-react';
 
-// Removed metadata export
+export const metadata: Metadata = {
+  title: 'About FortuneAI - Our Mission, Vision, and Values',
+  description: 'Learn about FortuneAI, our mission to democratize AI through intelligent agents, our vision for the future of business automation, and the core values that drive us.',
+  openGraph: {
+    title: 'About FortuneAI - Our Mission, Vision, and Values',
+    description: 'Learn about FortuneAI, our mission to democratize AI through intelligent agents, our vision for the future of business automation, and the core values that drive us.',
+  },
+  twitter: {
+    title: 'About FortuneAI - Our Mission, Vision, and Values',
+    description: 'Learn about FortuneAI, our mission to democratize AI through intelligent agents, our vision for the future of business automation, and the core values that drive us.',
+  },
+};
 
-// Original page content directly in the default export function
 const MissionVisionSection = () => (
   <section id="mission-vision" className="py-12 md:py-20 bg-card text-card-foreground">
     <div className="container mx-auto px-4">
@@ -41,7 +50,6 @@ const FounderStorySection = () => (
           <p>
             The motivation behind Fortune AI is a commitment to building tools that make a real difference – democratizing AI by creating practical, cost-effective solutions that enhance efficiency and empower businesses to thrive in an increasingly digital world.
           </p>
-          {/* Consider adding a picture of the founder here */}
         </div>
       </RevealOnScroll>
     </div>

@@ -11,14 +11,14 @@ export function Preloader() {
     // Start fading out immediately or after a very short delay
     const timer = setTimeout(() => {
       setIsFadingOut(true);
-    }, 100); // Reduced delay to 100ms to allow initial render
+    }, 1500); // delay
 
     // After fade out animation, set isLoading to false to remove from DOM
     const fadeOutTimer = setTimeout(() => {
       if (isFadingOut) { // Check if it's still fading out (not unmounted early)
         setIsLoading(false);
       }
-    }, 100 + 500); // Reduced delay + fade-out duration
+    }, 1500 + 500); // delay + fade-out duration
 
     return () => {
       clearTimeout(timer);

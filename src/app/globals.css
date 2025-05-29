@@ -132,7 +132,7 @@ body.custom-cursor-active * {
 
     --accent: 192 100% 50%; 
     --accent-hsl: 192 100% 50%;
-    --accent-foreground: 240 20% 10%;
+    --accent-foreground: 240 20% 10%; /* Dark color for text on accent background */
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
@@ -174,7 +174,7 @@ body.custom-cursor-active * {
     --muted-foreground: 0 0% 60%;
     --accent: 192 100% 50%; 
     --accent-hsl: 192 100% 50%;
-    --accent-foreground: 240 20% 10%;
+    --accent-foreground: 240 20% 10%; /* Dark color for text on accent background */
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 20% 35%;
@@ -218,4 +218,43 @@ input[type=number]::-webkit-outer-spin-button {
 }
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+/* n8n Chat Widget Customization */
+#n8n-chat {
+  /* Primary (toggle button, main interactive elements) - Electric Blue (Website Accent) */
+  --chat--color-primary: hsl(var(--accent-hsl));
+  --chat--color-primary-shade-50: hsl(192, 100%, 45%); 
+  --chat--color-primary-shade-100: hsl(192, 100%, 40%); 
+  --chat--toggle--background: hsl(var(--accent-hsl));
+  --chat--toggle--hover--background: hsl(192, 100%, 45%);
+  --chat--toggle--active--background: hsl(192, 100%, 40%);
+
+  /* Secondary color - No longer used directly for user messages after this change */
+  /* --chat--color-secondary: hsl(var(--accent-hsl)); */ /* Kept for reference, but overridden below */
+
+  /* General UI Colors from Website Theme */
+  --chat--color-dark: hsl(var(--background)); /* Website Dark Background (Charcoal Navy) */
+  --chat--color-white: hsl(0, 0%, 100%); /* Explicit white for consistency in some fonts */
+  --chat--color-light: hsl(var(--card)); /* Main chat window background - Slightly Lighter Charcoal Navy */
+  
+  /* Header */
+  --chat--header--background: hsl(var(--background)); /* Darker Charcoal Navy */
+  --chat--header--color: hsl(var(--foreground)); /* Light text */
+
+  /* Bot Messages */
+  --chat--message--bot--background: hsl(var(--background)); /* Darker Charcoal Navy */
+  --chat--message--bot--color: hsl(var(--foreground)); /* Light text */
+
+  /* User Messages - Explicitly set to Accent Color */
+  --chat--message--user--background: hsl(var(--accent-hsl)); /* Electric Blue */
+  --chat--message--user--color: hsl(var(--accent-foreground)); /* Dark text for accent background */
+
+  /* To ensure chat text input area also aligns if needed */
+  /* --chat--textarea--background: hsl(var(--input)); */
+  /* --chat--textarea--color: hsl(var(--foreground)); */
+
+  /* Chat Window Size */
+  --chat--window--width: 500px;
+  --chat--window--height: 700px;
 }

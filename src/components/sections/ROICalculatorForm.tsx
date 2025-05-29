@@ -97,8 +97,7 @@ export function ROICalculatorForm() {
     // Sophisticated Calculations
     let annualSavingsFromReducedAttrition: number | undefined = undefined;
     if (data.attritionRate && data.onboardingCost && data.numEmployees > 0) {
-      // Assuming automation reduces attrition for these roles by a fixed percentage (e.g., 10-25% of original attrition)
-      const attritionReductionFactor = 0.15; // e.g., AI helps reduce 15% of the attrition problem for these roles
+      const attritionReductionFactor = 0.15; 
       const numberOfEmployeesAffectedByAttrition = data.numEmployees * (data.attritionRate / 100);
       const employeesRetainedDueToAutomation = numberOfEmployeesAffectedByAttrition * attritionReductionFactor;
       annualSavingsFromReducedAttrition = employeesRetainedDueToAutomation * data.onboardingCost;
@@ -107,21 +106,16 @@ export function ROICalculatorForm() {
 
     let annualValueFromProductivityIncrease: number | undefined = undefined;
     if (data.productivityIncreaseFactor && data.productivityIncreaseFactor > 1.0) {
-      const hoursReinvested = potentialMonthlyHoursSaved; // Hours saved are now available
-      // Value of these hours if applied to tasks with the defined productivity factor
-      // This is a simplified model; true value depends on what the reinvested hours produce.
-      // Assuming the reinvested hours generate value at the same hourly cost but amplified by the productivity factor.
+      const hoursReinvested = potentialMonthlyHoursSaved; 
       const additionalValuePerMonth = (hoursReinvested * data.hourlyCost * (data.productivityIncreaseFactor - 1.0));
       annualValueFromProductivityIncrease = additionalValuePerMonth * 12;
-      // Note: This productivity increase is added to total *value*, not direct cost savings for ROI calculation against budget, unless specified.
     }
     
     const totalAnnualPotentialValue = totalAnnualDirectSavings + (annualValueFromProductivityIncrease || 0);
 
     let roiPercentage: number | undefined = undefined;
     if (data.estimatedBudget && data.estimatedBudget > 0) {
-        // ROI based on direct cost savings against budget
-      roiPercentage = (totalAnnualDirectSavings / (data.estimatedBudget * 12)) * 100; // Assuming budget is monthly, so annualize it
+      roiPercentage = (totalAnnualDirectSavings / (data.estimatedBudget * 12)) * 100; 
     }
 
     const costComparisonChartData = [
@@ -174,189 +168,195 @@ export function ROICalculatorForm() {
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-      <RevealOnScroll>
-        <Card className="shadow-lg bg-secondary">
-          <CardHeader>
-            <CardTitle>Calculate Your Automation ROI</CardTitle>
-            <CardDescription>
-              Estimate potential savings & value. AI is assumed to automate 80% of the task time. Fields marked (Optional) can be left blank.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <Label htmlFor="numEmployees">Number of Employees on Task</Label>
-                <Input id="numEmployees" type="number" {...register("numEmployees")} className="mt-1" />
-                {errors.numEmployees && <p className="text-sm text-destructive mt-1">{errors.numEmployees.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="hoursPerWeek">Avg. Hours Spent Per Employee Per Week on This Task</Label>
-                <Input id="hoursPerWeek" type="number" step="0.1" {...register("hoursPerWeek")} className="mt-1" />
-                {errors.hoursPerWeek && <p className="text-sm text-destructive mt-1">{errors.hoursPerWeek.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="hourlyCost">Avg. Hourly Cost of Employee ($)</Label>
-                <Input id="hourlyCost" type="number" step="0.01" {...register("hourlyCost")} className="mt-1" />
-                {errors.hourlyCost && <p className="text-sm text-destructive mt-1">{errors.hourlyCost.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="currentMonthlyErrorCost">Current Monthly Cost of Errors ($) (Optional)</Label>
-                <Input id="currentMonthlyErrorCost" type="number" step="0.01" {...register("currentMonthlyErrorCost")} className="mt-1" placeholder="e.g., 500" />
-                {errors.currentMonthlyErrorCost && <p className="text-sm text-destructive mt-1">{errors.currentMonthlyErrorCost.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="errorReductionPercentage">Estimated Error Reduction by AI (%) (Optional, if error cost &gt; 0)</Label>
-                <Input id="errorReductionPercentage" type="number" {...register("errorReductionPercentage")} className="mt-1" placeholder="e.g., 90"/>
-                {errors.errorReductionPercentage && <p className="text-sm text-destructive mt-1">{errors.errorReductionPercentage.message}</p>}
-              </div>
-              <hr/>
-              <p className="text-sm text-muted-foreground">Advanced Value Drivers (Optional):</p>
-              <div>
-                <Label htmlFor="attritionRate">Avg. Employee Attrition Rate for Role (% per year)</Label>
-                <Input id="attritionRate" type="number" step="0.1" {...register("attritionRate")} className="mt-1" placeholder="e.g., 15"/>
-                {errors.attritionRate && <p className="text-sm text-destructive mt-1">{errors.attritionRate.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="onboardingCost">Avg. Cost to Onboard New Employee ($)</Label>
-                <Input id="onboardingCost" type="number" step="1" {...register("onboardingCost")} className="mt-1" placeholder="e.g., 5000"/>
-                {errors.onboardingCost && <p className="text-sm text-destructive mt-1">{errors.onboardingCost.message}</p>}
-              </div>
-              <div>
-                <Label htmlFor="productivityIncreaseFactor">Productivity Factor for Reinvested Hours (e.g., 1.0 = no change, 1.2 = 20% more output)</Label>
-                <Input id="productivityIncreaseFactor" type="number" step="0.01" {...register("productivityIncreaseFactor")} className="mt-1" placeholder="e.g., 1.2"/>
-                {errors.productivityIncreaseFactor && <p className="text-sm text-destructive mt-1">{errors.productivityIncreaseFactor.message}</p>}
-              </div>
-              <hr/>
-              <div>
-                <Label htmlFor="estimatedBudget">Your Est. Monthly Budget for Automation Solution ($) (Optional for ROI %)</Label>
-                <Input id="estimatedBudget" type="number" step="0.01" {...register("estimatedBudget")} className="mt-1" placeholder="e.g., 1000" />
-                {errors.estimatedBudget && <p className="text-sm text-destructive mt-1">{errors.estimatedBudget.message}</p>}
-              </div>
-              <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                {isSubmitting ? "Calculating..." : "Calculate ROI & Potential Value"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </RevealOnScroll>
+    <div className={`w-full transition-all duration-500 ease-in-out ${results ? 'max-w-6xl' : 'max-w-2xl'} mx-auto`}>
+      <Card className="shadow-lg bg-secondary transition-all duration-500 ease-in-out">
+        <div className={`flex flex-col ${results ? 'md:flex-row' : 'flex-col'}`}>
+          {/* Form Section */}
+          <div className={`p-6 transition-all duration-500 ease-in-out ${results ? 'md:w-1/2 md:pr-3' : 'w-full'}`}>
+            <RevealOnScroll>
+              <CardHeader className="px-0 pt-0">
+                <CardTitle>Calculate Your Automation ROI</CardTitle>
+                <CardDescription>
+                  Estimate potential savings & value. AI is assumed to automate 80% of the task time. Fields marked (Optional) can be left blank.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="px-0 pb-0">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div>
+                    <Label htmlFor="numEmployees">Number of Employees on Task</Label>
+                    <Input id="numEmployees" type="number" {...register("numEmployees")} className="mt-1" />
+                    {errors.numEmployees && <p className="text-sm text-destructive mt-1">{errors.numEmployees.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="hoursPerWeek">Avg. Hours Spent Per Employee Per Week on This Task</Label>
+                    <Input id="hoursPerWeek" type="number" step="0.1" {...register("hoursPerWeek")} className="mt-1" />
+                    {errors.hoursPerWeek && <p className="text-sm text-destructive mt-1">{errors.hoursPerWeek.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="hourlyCost">Avg. Hourly Cost of Employee ($)</Label>
+                    <Input id="hourlyCost" type="number" step="0.01" {...register("hourlyCost")} className="mt-1" />
+                    {errors.hourlyCost && <p className="text-sm text-destructive mt-1">{errors.hourlyCost.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="currentMonthlyErrorCost">Current Monthly Cost of Errors ($) (Optional)</Label>
+                    <Input id="currentMonthlyErrorCost" type="number" step="0.01" {...register("currentMonthlyErrorCost")} className="mt-1" placeholder="e.g., 500" />
+                    {errors.currentMonthlyErrorCost && <p className="text-sm text-destructive mt-1">{errors.currentMonthlyErrorCost.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="errorReductionPercentage">Estimated Error Reduction by AI (%) (Optional, if error cost &gt; 0)</Label>
+                    <Input id="errorReductionPercentage" type="number" {...register("errorReductionPercentage")} className="mt-1" placeholder="e.g., 90"/>
+                    {errors.errorReductionPercentage && <p className="text-sm text-destructive mt-1">{errors.errorReductionPercentage.message}</p>}
+                  </div>
+                  <hr/>
+                  <p className="text-sm text-muted-foreground">Advanced Value Drivers (Optional):</p>
+                  <div>
+                    <Label htmlFor="attritionRate">Avg. Employee Attrition Rate for Role (% per year)</Label>
+                    <Input id="attritionRate" type="number" step="0.1" {...register("attritionRate")} className="mt-1" placeholder="e.g., 15"/>
+                    {errors.attritionRate && <p className="text-sm text-destructive mt-1">{errors.attritionRate.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="onboardingCost">Avg. Cost to Onboard New Employee ($)</Label>
+                    <Input id="onboardingCost" type="number" step="1" {...register("onboardingCost")} className="mt-1" placeholder="e.g., 5000"/>
+                    {errors.onboardingCost && <p className="text-sm text-destructive mt-1">{errors.onboardingCost.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="productivityIncreaseFactor">Productivity Factor for Reinvested Hours (e.g., 1.0 = no change, 1.2 = 20% more output)</Label>
+                    <Input id="productivityIncreaseFactor" type="number" step="0.01" {...register("productivityIncreaseFactor")} className="mt-1" placeholder="e.g., 1.2"/>
+                    {errors.productivityIncreaseFactor && <p className="text-sm text-destructive mt-1">{errors.productivityIncreaseFactor.message}</p>}
+                  </div>
+                  <hr/>
+                  <div>
+                    <Label htmlFor="estimatedBudget">Your Est. Monthly Budget for Automation Solution ($) (Optional for ROI %)</Label>
+                    <Input id="estimatedBudget" type="number" step="0.01" {...register("estimatedBudget")} className="mt-1" placeholder="e.g., 1000" />
+                    {errors.estimatedBudget && <p className="text-sm text-destructive mt-1">{errors.estimatedBudget.message}</p>}
+                  </div>
+                  <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                    {isSubmitting ? "Calculating..." : "Calculate ROI & Potential Value"}
+                  </Button>
+                </form>
+              </CardContent>
+            </RevealOnScroll>
+          </div>
 
-      {results && (
-        <RevealOnScroll delay={200}>
-          <Card className="shadow-lg bg-secondary">
-            <CardHeader>
-              <CardTitle>Your Estimated Automation Impact</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Key Financial Projections:</h3>
-                <ul className="list-disc list-inside space-y-1.5 mt-2 text-muted-foreground">
-                  <li>Current Monthly Labor Cost: ${results.currentMonthlyLaborCost.toFixed(2)}</li>
-                  {results.currentMonthlyErrorCost > 0 && (
-                    <li>Current Monthly Cost of Errors: ${results.currentMonthlyErrorCost.toFixed(2)}</li>
-                  )}
-                  <li className="font-medium">Total Current Estimated Monthly Operating Cost for Task: ${results.totalCurrentMonthlyCost.toFixed(2)}</li>
+          {/* Results Section - Conditionally Rendered and Animated */}
+          {results && (
+            <div className={`p-6 transition-all duration-700 ease-in-out md:w-1/2 md:pl-3 md:border-l md:border-border/50 bg-background/20 ${results ? 'opacity-100' : 'opacity-0 md:w-0'}`}>
+              <RevealOnScroll delay={200}>
+                <CardHeader className="px-0 pt-0">
+                  <CardTitle>Your Estimated Automation Impact</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-8 px-0 pb-0">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-3">Key Financial Projections:</h3>
+                    <ul className="list-disc list-inside space-y-1.5 mt-2 text-muted-foreground">
+                      <li>Current Monthly Labor Cost: ${results.currentMonthlyLaborCost.toFixed(2)}</li>
+                      {results.currentMonthlyErrorCost > 0 && (
+                        <li>Current Monthly Cost of Errors: ${results.currentMonthlyErrorCost.toFixed(2)}</li>
+                      )}
+                      <li className="font-medium">Total Current Estimated Monthly Operating Cost for Task: ${results.totalCurrentMonthlyCost.toFixed(2)}</li>
+                      
+                      <li className="text-green-600 font-medium">Potential Monthly Hours Saved (Task Automation at 80%): {results.potentialMonthlyHoursSaved.toFixed(2)} hours</li>
+                      <li className="text-green-600 font-medium">Potential Monthly Direct Cost Savings (Labor & Errors): ${(results.maxPotentialMonthlyCostSavings).toFixed(2)}</li>
+                      <li className="text-green-500 font-bold text-lg">Total Potential Annual Direct Cost Savings: ${results.annualCostSavingsFromLabor.toFixed(2)} (Labor) + ${results.annualCostSavingsFromErrors.toFixed(2)} (Errors) = ${ (results.annualCostSavingsFromLabor + results.annualCostSavingsFromErrors).toFixed(2) }</li>
+                      {results.annualSavingsFromReducedAttrition !== undefined && (
+                        <li className="text-sky-600 font-medium">Est. Annual Savings from Reduced Attrition: ${results.annualSavingsFromReducedAttrition.toFixed(2)}</li>
+                      )}
+                      {results.annualValueFromProductivityIncrease !== undefined && results.annualValueFromProductivityIncrease > 0 && (
+                        <li className="text-purple-600 font-medium">Est. Annual Value from Reinvested Hours (Productivity Gain): ${results.annualValueFromProductivityIncrease.toFixed(2)}</li>
+                      )}
+                       <li className="text-emerald-700 font-bold text-2xl">Total Estimated Annual Potential Value: ${results.totalAnnualPotentialValue.toFixed(2)}</li>
+                      {results.roiPercentage !== undefined && (
+                        <li className="text-blue-600 font-bold text-2xl">Estimated ROI (Annual Direct Savings vs Annual Budget): {results.roiPercentage.toFixed(1)}%</li>
+                      )}
+                    </ul>
+                  </div>
                   
-                  <li className="text-green-600 font-medium">Potential Monthly Hours Saved (Task Automation at 80%): {results.potentialMonthlyHoursSaved.toFixed(2)} hours</li>
-                  <li className="text-green-600 font-medium">Potential Monthly Direct Cost Savings (Labor & Errors): ${(results.maxPotentialMonthlyCostSavings).toFixed(2)}</li>
-                  <li className="text-green-500 font-bold text-lg">Total Potential Annual Direct Cost Savings: ${results.annualCostSavingsFromLabor.toFixed(2)} (Labor) + ${results.annualCostSavingsFromErrors.toFixed(2)} (Errors) = ${ (results.annualCostSavingsFromLabor + results.annualCostSavingsFromErrors).toFixed(2) }</li>
-                  {results.annualSavingsFromReducedAttrition !== undefined && (
-                    <li className="text-sky-600 font-medium">Est. Annual Savings from Reduced Attrition: ${results.annualSavingsFromReducedAttrition.toFixed(2)}</li>
+                  {results.costBreakdownChartData && results.costBreakdownChartData.length > 0 && (
+                     <div>
+                      <h3 className="text-lg font-semibold mt-6 mb-2">Current Monthly Cost Breakdown:</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie data={results.costBreakdownChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
+                            {results.costBreakdownChartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
                   )}
-                  {results.annualValueFromProductivityIncrease !== undefined && results.annualValueFromProductivityIncrease > 0 && (
-                    <li className="text-purple-600 font-medium">Est. Annual Value from Reinvested Hours (Productivity Gain): ${results.annualValueFromProductivityIncrease.toFixed(2)}</li>
+
+                  {results.timeAllocationChartData && results.timeAllocationChartData.length > 0 && (
+                     <div>
+                      <h3 className="text-lg font-semibold mt-6 mb-2">Projected Monthly Time Allocation (Post-Automation):</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie data={results.timeAllocationChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
+                            {results.timeAllocationChartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => `${value.toFixed(1)} hours`} />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
                   )}
-                   <li className="text-emerald-700 font-bold text-2xl">Total Estimated Annual Potential Value: ${results.totalAnnualPotentialValue.toFixed(2)}</li>
-                  {results.roiPercentage !== undefined && (
-                    <li className="text-blue-600 font-bold text-2xl">Estimated ROI (Annual Direct Savings vs Annual Budget): {results.roiPercentage.toFixed(1)}%</li>
+
+                  {results.costComparisonChartData.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-semibold mt-6 mb-2">Monthly Cost Comparison:</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={results.costComparisonChartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis tickFormatter={(value) => `$${value}`} />
+                          <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}`, undefined]}/>
+                          <Legend />
+                          <Bar dataKey="value" name="Cost ($)" >
+                            {results.costComparisonChartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={BAR_CHART_COLORS[index % BAR_CHART_COLORS.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
                   )}
-                </ul>
-              </div>
-              
-              {results.costBreakdownChartData && results.costBreakdownChartData.length > 0 && (
-                 <div>
-                  <h3 className="text-lg font-semibold mt-6 mb-2">Current Monthly Cost Breakdown:</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie data={results.costBreakdownChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                        {results.costBreakdownChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
 
-              {results.timeAllocationChartData && results.timeAllocationChartData.length > 0 && (
-                 <div>
-                  <h3 className="text-lg font-semibold mt-6 mb-2">Projected Monthly Time Allocation (Post-Automation):</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie data={results.timeAllocationChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                        {results.timeAllocationChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value: number) => `${value.toFixed(1)} hours`} />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
+                  {results.cumulativeSavingsTrendData.length > 0 && (
+                     <div>
+                      <h3 className="text-lg font-semibold mt-6 mb-2">Projected Cumulative Direct Savings (12 Months with Ramp-up):</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={results.cumulativeSavingsTrendData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="month" />
+                          <YAxis tickFormatter={(value) => `$${value}`} />
+                          <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}`, undefined]}/>
+                          <Legend />
+                          <Line type="monotone" dataKey="savings" name="Cumulative Direct Savings ($)" stroke="#82ca9d" strokeWidth={2} activeDot={{ r: 8 }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  )}
 
-              {results.costComparisonChartData.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mt-6 mb-2">Monthly Cost Comparison:</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={results.costComparisonChartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis tickFormatter={(value) => `$${value}`} />
-                      <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}`, undefined]}/>
-                      <Legend />
-                      <Bar dataKey="value" name="Cost ($)" >
-                        {results.costComparisonChartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={BAR_CHART_COLORS[index % BAR_CHART_COLORS.length]} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
-
-              {results.cumulativeSavingsTrendData.length > 0 && (
-                 <div>
-                  <h3 className="text-lg font-semibold mt-6 mb-2">Projected Cumulative Direct Savings (12 Months with Ramp-up):</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={results.cumulativeSavingsTrendData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      <YAxis tickFormatter={(value) => `$${value}`} />
-                      <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}`, undefined]}/>
-                      <Legend />
-                      <Line type="monotone" dataKey="savings" name="Cumulative Direct Savings ($)" stroke="#82ca9d" strokeWidth={2} activeDot={{ r: 8 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
-
-              <div className="mt-10 text-center">
-                <p className="text-sm text-muted-foreground mb-4">
-                  * Disclaimer: These calculations are estimates based on the inputs you provided and common automation scenarios (80% task automation, 15% attrition reduction factor). Actual results can vary significantly.
-                </p>
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/80 text-accent-foreground">
-                  <Link href={`/contact?service=workflow-automation&message=I've used the ROI calculator. My estimated annual potential value is $${results.totalAnnualPotentialValue.toFixed(2)} (including $${(results.annualCostSavingsFromLabor + results.annualCostSavingsFromErrors).toFixed(2)} direct savings). I'd like to discuss this.`}>
-                    Discuss Your Custom Automation Strategy
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </RevealOnScroll>
-      )}
+                  <div className="mt-10 text-center">
+                    <p className="text-sm text-muted-foreground mb-4">
+                      * Disclaimer: These calculations are estimates based on the inputs you provided and common automation scenarios (80% task automation, 15% attrition reduction factor). Actual results can vary significantly.
+                    </p>
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/80 text-accent-foreground">
+                      <Link href={`/contact?service=workflow-automation&message=I've used the ROI calculator. My estimated annual potential value is $${results.totalAnnualPotentialValue.toFixed(2)} (including $${(results.annualCostSavingsFromLabor + results.annualCostSavingsFromErrors).toFixed(2)} direct savings). I'd like to discuss this.`}>
+                        Discuss Your Custom Automation Strategy
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </RevealOnScroll>
+            </div>
+          )}
+        </div>
+      </Card>
     </div>
   );
 }
